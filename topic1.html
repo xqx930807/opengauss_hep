@@ -88,7 +88,7 @@
         align-items: center;
     }
     .topic_content_item_item{
-        min-width: 94px;
+        width: 94px;
         min-height: 54px;
         display: flex;
         align-items: center;
@@ -244,10 +244,10 @@
                 <div class="topic_kang" id="topic">
                     <div class="topic_tip">将下列选项拖到对应位置上。</div>
                     <div class="topic_tab">
-                        <div draggable="true" class="topic_tab_item" isItem="DBA">数据库管理员DBA</div>
-                        <div draggable="true" class="topic_tab_item" isItem="DBMS">数据库管理管理系统DBMS</div>
-                        <div draggable="true" class="topic_tab_item" isItem="DB">数据库DB</div>
-                        <div draggable="true" class="topic_tab_item" isItem="YJCZ">计算机硬件、操作系统</div>
+                        <div draggable="true" class="topic_tab_item" isItem="DBA" ondragstart="dragstartFun(event)">数据库管理员DBA</div>
+                        <div draggable="true" class="topic_tab_item" isItem="DBMS" ondragstart="dragstartFun(event)">数据库管理管理系统DBMS</div>
+                        <div draggable="true" class="topic_tab_item" isItem="DB" ondragstart="dragstartFun(event)">数据库DB</div>
+                        <div draggable="true" class="topic_tab_item" isItem="YJCZ" ondragstart="dragstartFun(event)">计算机硬件、操作系统</div>
                     </div>
                     <div class="topic_content">
                         <div class="topic_content_item">
@@ -258,7 +258,7 @@
                                     <div class="arrow_line"></div>
                                 </div>
                             </div>
-                            <div class="topic_content_item_item topic_bot topic_list" isItem="DBA"></div> <!-- 数据库管理员DBA -->
+                            <div class="topic_content_item_item topic_bot topic_list" isItem="DBA"   ondrop="dropFun(event)" ondragover="dragoverFun(event)" ondragenter="dragenterFun(event)"></div> <!-- 数据库管理员DBA -->
                             <div class="arrow">
                                 <div class="arrow_kan arrow_uptow">
                                     <div class="arrow_top"></div>
@@ -282,21 +282,21 @@
                                 </div>
                             </div>
                         
-                            <div class="topic_content_item_item topic_list" isItem="DBMS"></div> <!-- 数据库管理管理系统DBMS -->
+                            <div class="topic_content_item_item topic_list" isItem="DBMS"  ondrop="dropFun(event)" ondragover="dragoverFun(event)" ondragenter="dragenterFun(event)"></div> <!-- 数据库管理管理系统DBMS -->
                             <div class="arrow">
                                 <div class="arrow_kan">
                                     <div class="arrow_top"></div>
                                     <div class="arrow_line"></div>
                                 </div>
                             </div>
-                            <div class="topic_content_item_item topic_list" isItem="DB"></div> <!-- 数据库DB -->
+                            <div class="topic_content_item_item topic_list" isItem="DB"  ondrop="dropFun(event)" ondragover="dragoverFun(event)" ondragenter="dragenterFun(event)"></div> <!-- 数据库DB -->
                             <div class="arrow">
                                 <div class="arrow_kan">
                                     <div class="arrow_top"></div>
                                     <div class="arrow_line"></div>
                                 </div>
                             </div>
-                            <div class="topic_content_item_item topic_list" isItem="YJCZ"></div> <!-- 计算机硬件、操作系统 -->
+                            <div class="topic_content_item_item topic_list" isItem="YJCZ"  ondrop="dropFun(event)" ondragover="dragoverFun(event)" ondragenter="dragenterFun(event)"></div> <!-- 计算机硬件、操作系统 -->
                         </div>
                         <div class="topic_content_item">
                             <div class="topic_content_item_item">用户</div>
@@ -342,80 +342,72 @@
 
 
     /******************拖放交互*******************************/
-        let htmlTopic = document.getElementById('topic').innerHTML
-        let ind = 0
-        let type = ''
-        let typeList=[]
-        function openDrag(){
-            let lis = document.querySelectorAll(".topic_tab_item")
-            let main = document.querySelectorAll(".topic_list")
-            let nav = document.querySelectorAll(".topic_tab")
-            for (let i = 0; i < lis.length; i++) {
-                lis[i].addEventListener("dragstart", function (e) {
-                    type = e.target.attributes.isItem.value
-                    ind=i
-                },false)
-               
-                main[i].addEventListener("dragenter", function (e) {
-                    e.preventDefault();
-                    e.stopPropagation(); // stop it here to prevent it bubble up
-                })
-                //当被拖动的对象在另一对象容器(放置容器)范围内拖动时触发此事件
-                main[i].addEventListener("dragover", function (e) {
-                    e.preventDefault()
-                    e.stopPropagation(); // stop it here to prevent it bubble up
-                })
-                
-                //在一个拖动过程中，释放鼠标键时触发此事件
-                main[i].addEventListener("drop", function (e) {
-                    e.preventDefault()
-                    e.stopPropagation(); // stop it here to prevent it bubble up
-                    let isSame=e.target.attributes.isItem.value==type
-                   let isInd = typeList.findIndex(i=>i.lisInd==ind)
-                   if(isInd==-1){
-                    typeList.push({
-                        isSame,
-                        lisInd:ind,
-                        ind:i
-                    })
-                   }else{
-                    typeList[isInd].isSame=isSame
-                    typeList[isInd].lisInd=ind
-                    typeList[isInd].ind=i
-                   }
-                    if(!main[i].innerHTML){
-                        main[i].appendChild(lis[ind]);
-                    }
-                    
-                })
-            }
+    let cxType = ''
+        let indS = 0
+        let cxTypeList=[]
+        let tdDom =''
+        //拖动
+        function dragstartFun(e){
+            tdDom = e.target.innerHTML
+            cxType = e.target.attributes.isItem.value
+            // ind=i
         }
-        openDrag()
+        function dragenterFun(e){
+            e.preventDefault(); // allows us to drop
+            e.stopPropagation(); // stop it here to prevent it bubble up
+        }
+        function dragoverFun(e){
+            e.preventDefault()
+        }
 
-        //提交判断是知识还是程序
-        let isItemPo = 1 // 知识1  程序2
-        
-        //确认
-        function handleSubmit(){
-            // .topic_prompt_success,.
-            isItemPo=1
-            let main = document.querySelectorAll(".topic_list")
-            for (let i = 0; i < main.length; i++) {
-                main[i].style.backgroundColor='#deeaf6'
+        function dropFun(e){
+            e.preventDefault()
+            e.target.style.backgroundColor='#deeaf6'
+            let isSame=e.target.attributes.isItem.value==cxType
+            let isInd = cxTypeList.findIndex(i=>i.mdType==e.target.attributes.isItem.value)
+                if(isInd==-1){
+                    cxTypeList.push({
+                        isSame,
+                        cxType,
+                        mdType:e.target.attributes.isItem.value,
+                    })
+                }else{
+                    cxTypeList[isInd].isSame=isSame
+                    cxTypeList[isInd].cxType=cxType
+                    cxTypeList[isInd].mdType=e.target.attributes.isItem.value
+                }
+            e.target.innerHTML=tdDom
+        }
+
+
+        //程序重置
+        function handleReset() {
+           let htCx =  document.getElementsByClassName('topic_list')
+           for (let i = 0; i < htCx.length; i++) {
+                htCx[i].innerHTML=''
+                htCx[i].style.backgroundColor='#deeaf6'
             }
-            let isErr = false
-            
-            for (let i = 0; i < typeList.length; i++) {
-                if(!typeList[i].isSame){
-                    main[typeList[i].ind].style.backgroundColor='#ff000085'
-                    isErr=true
+            cxTypeList=[]
+        }
+        //提交
+        function handleSubmit(){
+            let htCx =  document.getElementsByClassName('topic_list')
+            let isErr =false
+            console.log(cxTypeList)
+            for (let i = 0; i < cxTypeList.length; i++) {
+                if(!cxTypeList[i].isSame){
+                    for (let o = 0; o < htCx.length; o++) { 
+                        if(htCx[o].attributes.isItem.value==cxTypeList[i].mdType){
+                                htCx[o].style.backgroundColor='#ff000085'
+                                isErr=true
+                            }
+                    }
                 }
             }
-
             let tip = document.getElementsByClassName('topic_prompt')
             tip[0].style.display ='flex'
-            let isSuc = typeList.some(i=>!i.isSame)
-            if(typeList.length<4||isErr){
+            let isSuc = cxTypeList.some(i=>!i.isSame)
+            if(cxTypeList.length<htCx.length||isErr){
                 let err = document.getElementsByClassName('topic_prompt_err')
                 err[0].style.display ='block'
             }else if(!isSuc){
@@ -423,12 +415,7 @@
                  suc[0].style.display ='block'
             }
         }
-        //重置
-        function handleReset() {
-            document.getElementById('topic').innerHTML=htmlTopic
-            typeList=[]
-            openDrag()
-        }
+
 
         //报错重新选择
         function handleSelect(){
@@ -436,12 +423,6 @@
             let err = document.getElementsByClassName('topic_prompt_err')
             tip[0].style.display ='none'
             err[0].style.display ='none'
-            if(isItemPo==1){
-                handleReset()
-            }else{
-                handleResetCx()
-            }
-            
         }
         //成功返回
         function handleSuccess(){
@@ -450,6 +431,7 @@
             tip[0].style.display ='none'
             suc[0].style.display ='none'
         }
+
     </script>
 </body>
 </html>
