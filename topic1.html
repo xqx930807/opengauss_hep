@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>填充1</title>
+    <link rel="stylesheet" href="./js/default.css">
+    <script src="./js/index.min.js"></script>
+    <script src="./js/scroll-behaviour.min.js"></script>
+</head>
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+    .calssDom{
+        margin: 0 auto;
+        width: 680px; 
+        padding: 20px;
+        background-color: #d0ebff;
+    }
+    .massDom{
+        margin: 0 auto;
+        width: 640px;
+        height: 540px;
+        overflow: auto;
+        background-color: #fff;
+        border-radius: 5px;
+    }
+    /* 定制整个滚动条轨道的颜色 */
+    .massDom::-webkit-scrollbar-track {
+        background-color: #fff;
+    }
+    
+    /* 定制滚动条的颜色 */
+    .massDom::-webkit-scrollbar {
+        width: 10px; /* 定制滚动条的宽度 */
+    }
+    
+    /* 定制滚动条滑块的颜色 */
+    .massDom::-webkit-scrollbar-thumb {
+        background-color: #75b9ff;
+        border-radius: 10px;
+    }
+    
+    /* 当滑块悬停或活动时的颜色 */
+    .massDom::-webkit-scrollbar-thumb:hover {
+        background-color: #75b9ff;
+    }
+    .topic_title{
+        font-weight: 700;
+        padding: 10px 0;
+    }
+    .topic_kang{
+        padding: 5px;
+    }
+    .topic_tip{
+        font-size: 15px;
+        margin-bottom: 5px;
+    }
+    .topic_tab{
+        display: flex;
+        align-items: center;
+        height: 50px;
+    }
+    .topic_tab_item{
+        background-color: #5b9bd5;
+        border-radius: 5px;
+        min-height: 44px;
+        text-align: center;
+        color: #fff;
+        margin-right: 5px;
+        padding:  5px;
+        font-size: 13px;
+        width: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .topic_content{
+        margin-top: 30px;
+    }
+    .topic_content_item{
+        display: flex;
+        margin-top: 20px;
+        align-items: center;
+    }
+    .topic_content_item_item{
+        min-width: 94px;
+        min-height: 54px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #deeaf6;
+        text-align: center;
+        border-radius: 10px;
+        font-size: 13px;
+        padding:  2px;
+    }
+    .topic_bot{
+        margin-left: 128px;
+    }
+    .arrow {
+        width: 40px;
+        height: 6px;
+        position: relative;
+        margin-right: 5px;
+    }
+    .arrow_kan{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+    .arrow_top{
+        width: 8px;
+        height: 8px;
+        border-top: 2px solid #666;
+        border-right: 2px solid #666;
+        border-radius: 2px;
+        transform: rotate(45deg);
+        position: absolute;
+        right: 3px;
+    }
+    .arrow_line{
+        position: absolute;
+        width: 25px;
+        height: 2px;
+        background-color: #666;
+        right: 7px;
+        top: 3px;
+    }
+    .arrow_down{
+        transform: rotate(45deg);
+        top: 10px;
+    }
+    .arrow_up{
+        transform: rotate(-45deg);
+        top: -10px;
+    }
+    .arrow_uptow{
+        transform: rotate(90deg);
+        top: 25px;
+        left: -70px;
+    }
+    .arrow_uptow .arrow_line{
+        width: 9px;
+    }
+    .topic_list .topic_tab_item{
+        margin: 0;
+        padding: 0;
+        width: 90px;
+        height: 50px;
+        border-radius: 10px;
+    }
+    .topic_foot{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        margin: 40px;
+    }
+    .topic_foot>div{
+        height: 40px;
+        width: 160px;
+        text-align: center;
+        line-height: 40px;
+        border-radius: 40px;
+        cursor: pointer;
+    }
+    .topic_foot_sub{
+        background-color: #5b9bd5;
+        color: #fff;
+    }
+    .topic_foot_res{
+        background-color: red;
+        color: #fff;
+        
+    }
+    .topic_prompt{
+        position: fixed;
+        background-color: #66666699;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        display: none;
+    }
+    .topic_prompt_cont{
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        background-color: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .topic_prompt_success,.topic_prompt_err{
+        height: 100%;
+        display: none;
+    }
+    .topic_prompt_title{
+        text-align: center;
+        height: 160px;
+        line-height: 160px;
+        font-size: 20px;
+        color: #5b9bd5;
+    }
+    .topic_prompt_but{
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        background-color: #5b9bd5;
+        color: #fff;
+        cursor: pointer;
+    }
+    .topic_prompt_err .topic_prompt_title{
+        color: red;
+    }
+    .topic_prompt_err .topic_prompt_but{
+        background-color: red;
+    }
+    .topic_t{
+        display: inline-block;
+        width: 50px;
+        height: 30px;
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+        vertical-align: middle;
+    }
+    .topic_suce_text{
+        display: none;
+    }
+</style>
+<body>
+    <div class="calssDom">
+        <div class="massDom">
+            <div class="topic">
+                <div class="topic_kang" id="topic">
+                    <div class="topic_tip">将下列选项拖到对应位置上。</div>
+                    <div class="topic_tab">
+                        <div draggable="true" class="topic_tab_item" isItem="DBA">数据库管理员DBA</div>
+                        <div draggable="true" class="topic_tab_item" isItem="DBMS">数据库管理管理系统DBMS</div>
+                        <div draggable="true" class="topic_tab_item" isItem="DB">数据库DB</div>
+                        <div draggable="true" class="topic_tab_item" isItem="YJCZ">计算机硬件、操作系统</div>
+                    </div>
+                    <div class="topic_content">
+                        <div class="topic_content_item">
+                            <div class="topic_content_item_item">用户</div>
+                            <div class="arrow">
+                                <div class="arrow_kan arrow_down">
+                                    <div class="arrow_top"></div>
+                                    <div class="arrow_line"></div>
+                                </div>
+                            </div>
+                            <div class="topic_content_item_item topic_bot topic_list" isItem="DBA"></div> <!-- 数据库管理员DBA -->
+                            <div class="arrow">
+                                <div class="arrow_kan arrow_uptow">
+                                    <div class="arrow_top"></div>
+                                    <div class="arrow_line"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="topic_content_item">
+                            <div class="topic_content_item_item">用户</div>
+                            <div class="arrow">
+                                <div class="arrow_kan">
+                                    <div class="arrow_top"></div>
+                                    <div class="arrow_line"></div>
+                                </div>
+                            </div>
+                            <div class="topic_content_item_item">应用系统</div>
+                            <div class="arrow">
+                                <div class="arrow_kan">
+                                    <div class="arrow_top"></div>
+                                    <div class="arrow_line"></div>
+                                </div>
+                            </div>
+                        
+                            <div class="topic_content_item_item topic_list" isItem="DBMS"></div> <!-- 数据库管理管理系统DBMS -->
+                            <div class="arrow">
+                                <div class="arrow_kan">
+                                    <div class="arrow_top"></div>
+                                    <div class="arrow_line"></div>
+                                </div>
+                            </div>
+                            <div class="topic_content_item_item topic_list" isItem="DB"></div> <!-- 数据库DB -->
+                            <div class="arrow">
+                                <div class="arrow_kan">
+                                    <div class="arrow_top"></div>
+                                    <div class="arrow_line"></div>
+                                </div>
+                            </div>
+                            <div class="topic_content_item_item topic_list" isItem="YJCZ"></div> <!-- 计算机硬件、操作系统 -->
+                        </div>
+                        <div class="topic_content_item">
+                            <div class="topic_content_item_item">用户</div>
+                            <div class="arrow">
+                                <div class="arrow_kan arrow_up">
+                                    <div class="arrow_top"></div>
+                                    <div class="arrow_line"></div>
+                                </div>
+                            </div>
+                        
+                        </div>
+                    </div>
+                </div>
+                <div class="topic_foot">
+                    <div class="topic_foot_res" onclick="handleReset()">重置</div>
+                    <div class="topic_foot_sub" onclick="handleSubmit()">确认</div>
+                </div>
+            </div>
+            <div class="topic_prompt">
+                <div class="topic_prompt_cont">
+                    <div class="topic_prompt_success">
+                        <div class="topic_prompt_title">全部输入成功</div>
+                        <div class="topic_prompt_but" onclick="handleSuccess()">返回</div>
+                    </div>
+                    <div class="topic_prompt_err">
+                        <div class="topic_prompt_title">输入失败</div>
+                        <div class="topic_prompt_but" onclick="handleSelect()">重新选择</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script >
+    
+    /****************手机移动设置**********************/
+    var urlParams = new URLSearchParams(window.location.search);
+    var holdToDrag = urlParams.get('holdToDrag');
+
+    var polyfillApplied = MobileDragDrop.polyfill({
+        dragImageTranslateOverride: MobileDragDrop.scrollBehaviourDragImageTranslateOverride,
+        holdToDrag: holdToDrag
+    });
+
+
+    /******************拖放交互*******************************/
+        let htmlTopic = document.getElementById('topic').innerHTML
+        let ind = 0
+        let type = ''
+        let typeList=[]
+        function openDrag(){
+            let lis = document.querySelectorAll(".topic_tab_item")
+            let main = document.querySelectorAll(".topic_list")
+            let nav = document.querySelectorAll(".topic_tab")
+            for (let i = 0; i < lis.length; i++) {
+                lis[i].addEventListener("dragstart", function (e) {
+                    type = e.target.attributes.isItem.value
+                    ind=i
+                },false)
+               
+                main[i].addEventListener("dragenter", function (e) {
+                    e.preventDefault();
+                    e.stopPropagation(); // stop it here to prevent it bubble up
+                })
+                //当被拖动的对象在另一对象容器(放置容器)范围内拖动时触发此事件
+                main[i].addEventListener("dragover", function (e) {
+                    e.preventDefault()
+                    e.stopPropagation(); // stop it here to prevent it bubble up
+                })
+                
+                //在一个拖动过程中，释放鼠标键时触发此事件
+                main[i].addEventListener("drop", function (e) {
+                    e.preventDefault()
+                    e.stopPropagation(); // stop it here to prevent it bubble up
+                    let isSame=e.target.attributes.isItem.value==type
+                   let isInd = typeList.findIndex(i=>i.lisInd==ind)
+                   if(isInd==-1){
+                    typeList.push({
+                        isSame,
+                        lisInd:ind,
+                        ind:i
+                    })
+                   }else{
+                    typeList[isInd].isSame=isSame
+                    typeList[isInd].lisInd=ind
+                    typeList[isInd].ind=i
+                   }
+                    if(!main[i].innerHTML){
+                        main[i].appendChild(lis[ind]);
+                    }
+                    
+                })
+            }
+        }
+        openDrag()
+
+        //提交判断是知识还是程序
+        let isItemPo = 1 // 知识1  程序2
+        
+        //确认
+        function handleSubmit(){
+            // .topic_prompt_success,.
+            isItemPo=1
+            let main = document.querySelectorAll(".topic_list")
+            for (let i = 0; i < main.length; i++) {
+                main[i].style.backgroundColor='#deeaf6'
+            }
+            let isErr = false
+            
+            for (let i = 0; i < typeList.length; i++) {
+                if(!typeList[i].isSame){
+                    main[typeList[i].ind].style.backgroundColor='#ff000085'
+                    isErr=true
+                }
+            }
+
+            let tip = document.getElementsByClassName('topic_prompt')
+            tip[0].style.display ='flex'
+            let isSuc = typeList.some(i=>!i.isSame)
+            if(typeList.length<4||isErr){
+                let err = document.getElementsByClassName('topic_prompt_err')
+                err[0].style.display ='block'
+            }else if(!isSuc){
+                 let suc = document.getElementsByClassName('topic_prompt_success')
+                 suc[0].style.display ='block'
+            }
+        }
+        //重置
+        function handleReset() {
+            document.getElementById('topic').innerHTML=htmlTopic
+            typeList=[]
+            openDrag()
+        }
+
+        //报错重新选择
+        function handleSelect(){
+            let tip = document.getElementsByClassName('topic_prompt')
+            let err = document.getElementsByClassName('topic_prompt_err')
+            tip[0].style.display ='none'
+            err[0].style.display ='none'
+            if(isItemPo==1){
+                handleReset()
+            }else{
+                handleResetCx()
+            }
+            
+        }
+        //成功返回
+        function handleSuccess(){
+            let tip = document.getElementsByClassName('topic_prompt')
+            let suc = document.getElementsByClassName('topic_prompt_success')
+            tip[0].style.display ='none'
+            suc[0].style.display ='none'
+        }
+    </script>
+</body>
+</html>

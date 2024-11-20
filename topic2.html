@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>填充2</title>
+    <link rel="stylesheet" href="./js/default.css">
+    <script src="./js/index.min.js"></script>
+    <script src="./js/scroll-behaviour.min.js"></script>
+</head>
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+    .calssDom{
+        margin: 0 auto;
+        width: 680px; 
+        padding: 20px;
+        background-color: #d0ebff;
+    }
+    .massDom{
+        margin: 0 auto;
+        width: 640px;
+        height: 540px;
+        overflow: auto;
+        background-color: #fff;
+        border-radius: 5px;
+    }
+    /* 定制整个滚动条轨道的颜色 */
+    .massDom::-webkit-scrollbar-track {
+        background-color: #fff;
+    }
+    
+    /* 定制滚动条的颜色 */
+    .massDom::-webkit-scrollbar {
+        width: 10px; /* 定制滚动条的宽度 */
+    }
+    
+    /* 定制滚动条滑块的颜色 */
+    .massDom::-webkit-scrollbar-thumb {
+        background-color: #75b9ff;
+        border-radius: 10px;
+    }
+    
+    /* 当滑块悬停或活动时的颜色 */
+    .massDom::-webkit-scrollbar-thumb:hover {
+        background-color: #75b9ff;
+    }
+   
+    .topic_kang{
+        padding: 5px
+        /* padding-left: 30px; */
+    }
+    .topic_tip{
+        font-size: 15px;
+        margin-bottom: 5px;
+    }
+    
+    
+    .topic_foot{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        margin: 40px;
+    }
+    .topic_foot>div{
+        height: 40px;
+        width: 160px;
+        text-align: center;
+        line-height: 40px;
+        border-radius: 40px;
+        cursor: pointer;
+    }
+    .topic_foot_sub{
+        background-color: #5b9bd5;
+        color: #fff;
+    }
+    .topic_foot_res{
+        background-color: red;
+        color: #fff;
+        
+    }
+    .topic_prompt{
+        position: fixed;
+        background-color: #66666699;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        display: none;
+    }
+    .topic_prompt_cont{
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        background-color: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .topic_prompt_success,.topic_prompt_err{
+        height: 100%;
+        display: none;
+    }
+    .topic_prompt_title{
+        text-align: center;
+        height: 160px;
+        line-height: 160px;
+        font-size: 20px;
+        color: #5b9bd5;
+    }
+    .topic_prompt_but{
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        background-color: #5b9bd5;
+        color: #fff;
+        cursor: pointer;
+    }
+    .topic_prompt_err .topic_prompt_title{
+        color: red;
+    }
+    .topic_prompt_err .topic_prompt_but{
+        background-color: red;
+    }
+    .topic_t{
+        display: inline-block;
+        width: 50px;
+        height: 30px;
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+        vertical-align: middle;
+    }
+    .topic_text{
+        height: 30px;
+        display: inline-block;
+        background-color: #5b9bd5;
+        color: #fff;
+        line-height: 30px;
+        text-align: center;
+        border-radius: 5px;
+        padding: 0 8px;
+    }
+    .topic_suce_text{
+        display: none;
+    }
+</style>
+<body>
+    <div class="calssDom">
+        <div class="massDom">
+            <div class="topic">
+                <div class="topic_kang">
+                    <div style="margin-bottom: 10px;user-select: none;line-height: 30px;">
+                        <div>使用myroot用户连接本机默认数据库的语句，并指定端口号为15400。 </div> 
+                        gsql 
+                        <div class="topic_t" isItem="tyeD" ondrop="dropFun(event)" ondragover="dragoverFun(event)" ondragenter="dragenterFun(event)"></div> postgres 
+                        <div class="topic_t" isItem="tyeP" ondrop="dropFun(event)" ondragover="dragoverFun(event)" ondragenter="dragenterFun(event)"></div> 15400 
+                        <div class="topic_t" isItem="tyeU" ondrop="dropFun(event)" ondragover="dragoverFun(event)" ondragenter="dragenterFun(event)"></div> myroot
+                    </div>
+                    <div class="topic_tip">将选项的3个单词拖到对应划线位置上</div>
+                    <div style="margin-bottom: 10px;">
+                        选项：1、<text class="topic_text" draggable="true" isItem="tyeD" ondragstart="dragstartFun(event)">-d</text>；
+                        2、<text class="topic_text" draggable="true" isItem="tyeP" ondragstart="dragstartFun(event)">-p</text>；
+                        3、<text class="topic_text" draggable="true" isItem="tyeU" ondragstart="dragstartFun(event)">-U</text></div>
+                    <div class="topic_suce_text" >正确答案: gsql -d postgres -p 15400 -U myroot</div>
+                </div>
+                <div class="topic_foot">
+                    <div class="topic_foot_res" onclick="handleResetCx()">重置</div>
+                    <div class="topic_foot_sub" onclick="handleSubmitCx()">确认</div>
+                </div>
+
+            </div>
+            <div class="topic_prompt">
+                <div class="topic_prompt_cont">
+                    <div class="topic_prompt_success">
+                        <div class="topic_prompt_title">全部输入成功</div>
+                        <div class="topic_prompt_but" onclick="handleSuccess()">返回</div>
+                    </div>
+                    <div class="topic_prompt_err">
+                        <div class="topic_prompt_title">输入失败</div>
+                        <div class="topic_prompt_but" onclick="handleSelect()">重新选择</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script >
+    
+    /****************手机移动设置**********************/
+    var urlParams = new URLSearchParams(window.location.search);
+    var holdToDrag = urlParams.get('holdToDrag');
+
+    var polyfillApplied = MobileDragDrop.polyfill({
+        dragImageTranslateOverride: MobileDragDrop.scrollBehaviourDragImageTranslateOverride,
+        holdToDrag: holdToDrag
+    });
+
+
+
+       
+
+       
+    /******************拖放交互*******************************/
+        let cxType = ''
+        let indS = 0
+        let cxTypeList=[]
+        let tdDom =''
+        //拖动
+        function dragstartFun(e){
+            tdDom = e.target.innerHTML
+            cxType = e.target.attributes.isItem.value
+            // ind=i
+        }
+        function dragenterFun(e){
+            e.preventDefault(); // allows us to drop
+            e.stopPropagation(); // stop it here to prevent it bubble up
+        }
+        function dragoverFun(e){
+            e.preventDefault()
+        }
+
+        function dropFun(e){
+            e.preventDefault()
+            e.target.style.backgroundColor='#fff'
+            let isSame=e.target.attributes.isItem.value==cxType
+            let isInd = cxTypeList.findIndex(i=>i.mdType==e.target.attributes.isItem.value)
+            if(isInd==-1){
+                cxTypeList.push({
+                    isSame,
+                    cxType,
+                    mdType:e.target.attributes.isItem.value
+                })
+            }else{
+                cxTypeList[isInd].isSame=isSame
+                cxTypeList[isInd].cxType=cxType
+                cxTypeList[isInd].mdType=e.target.attributes.isItem.value
+            }
+                
+            // if(!e.target.innerHTML){
+                e.target.innerHTML=tdDom
+            // }
+        }
+
+
+        //程序重置
+        function handleResetCx() {
+           let htCx =  document.getElementsByClassName('topic_t')
+           for (let i = 0; i < htCx.length; i++) {
+                htCx[i].innerHTML=''
+                htCx[i].style.backgroundColor='#fff'
+            }
+            cxTypeList=[]
+            let suctxt = document.getElementsByClassName('topic_suce_text')
+                 suctxt[0].style.display ='none'
+        }
+        //提交
+        function handleSubmitCx(){
+            let htCx =  document.getElementsByClassName('topic_t')
+            for (let i = 0; i < htCx.length; i++) {
+                htCx[i].style.backgroundColor='#fff'
+            }
+            console.log(cxTypeList)
+            let isErr =false
+            for (let i = 0; i < cxTypeList.length; i++) {
+                if(!cxTypeList[i].isSame){
+                    for (let o = 0; o < htCx.length; o++) {
+                        if(htCx[o].attributes.isItem.value==cxTypeList[i].mdType){
+                            htCx[o].style.backgroundColor='#ff000085'
+                            isErr=true
+                        }
+                    }
+                }
+            }
+            let tip = document.getElementsByClassName('topic_prompt')
+            tip[0].style.display ='flex'
+            let isSuc = cxTypeList.some(i=>!i.isSame)
+            if(cxTypeList.length<htCx.length||isErr){
+                let err = document.getElementsByClassName('topic_prompt_err')
+                err[0].style.display ='block'
+            }else if(!isSuc){
+                 let suc = document.getElementsByClassName('topic_prompt_success')
+                //  let suctxt = document.getElementsByClassName('topic_suce_text')
+                 suc[0].style.display ='block'
+                //  suctxt[0].style.display ='block'
+            }
+        }
+
+        
+
+
+
+        //报错重新选择
+        function handleSelect(){
+            let tip = document.getElementsByClassName('topic_prompt')
+            let err = document.getElementsByClassName('topic_prompt_err')
+            tip[0].style.display ='none'
+            err[0].style.display ='none'
+            // handleResetCx()
+        }
+        //成功返回
+        function handleSuccess(){
+            let tip = document.getElementsByClassName('topic_prompt')
+            let suc = document.getElementsByClassName('topic_prompt_success')
+            tip[0].style.display ='none'
+            suc[0].style.display ='none'
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>填充9</title>
+    <link rel="stylesheet" href="./js/default.css">
+    <script src="./js/index.min.js"></script>
+    <script src="./js/scroll-behaviour.min.js"></script>
+</head>
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+    .calssDom{
+        margin: 0 auto;
+        width: 680px; 
+        padding: 20px;
+        background-color: #d0ebff;
+    }
+    .massDom{
+        margin: 0 auto;
+        width: 640px;
+        height: 540px;
+        overflow: auto;
+        background-color: #fff;
+        border-radius: 5px;
+    }
+    /* 定制整个滚动条轨道的颜色 */
+    .massDom::-webkit-scrollbar-track {
+        background-color: #fff;
+    }
+    
+    /* 定制滚动条的颜色 */
+    .massDom::-webkit-scrollbar {
+        width: 10px; /* 定制滚动条的宽度 */
+    }
+    
+    /* 定制滚动条滑块的颜色 */
+    .massDom::-webkit-scrollbar-thumb {
+        background-color: #75b9ff;
+        border-radius: 10px;
+    }
+    
+    /* 当滑块悬停或活动时的颜色 */
+    .massDom::-webkit-scrollbar-thumb:hover {
+        background-color: #75b9ff;
+    }
+
+   
+    .topic_kang{
+        padding: 5px
+        /* padding-left: 30px; */
+    }
+    .topic_tip{
+        font-size: 15px;
+        margin-bottom: 5px;
+    }
+    .topic_tab{
+        display: flex;
+        align-items: center;
+        height: 50px;
+    }
+    .topic_tab_item{
+        background-color: #5b9bd5;
+        border-radius: 5px;
+        min-height: 44px;
+        text-align: center;
+        color: #fff;
+        margin-right: 5px;
+        padding:  5px;
+        font-size: 13px;
+        width: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .topic_content{
+        margin-top: 30px;
+        display: flex;
+        align-items: end;
+        justify-content: center;
+    }
+    /* .topic_content_item{
+        margin-top: 20px;
+    } */
+    .topic_content_item_item{
+        width: 94px;
+        min-height: 54px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #deeaf6;
+        text-align: center;
+        border-radius: 10px;
+        font-size: 13px;
+        padding:  2px;
+    }
+    .topic_bot{
+        margin-left: 140px;
+    }
+    .arrow {
+        height: 40px;
+        position: relative;
+        margin-right: 5px;
+    }
+    .arrow_kan{
+        width: 36px;
+        height: 40px;
+        position: absolute;
+        top: 0px;
+        left: 14px;
+        transform: rotate(90deg);
+    }
+    .arrow_top{
+        width: 8px;
+        height: 8px;
+        border-top: 2px solid #666;
+        border-right: 2px solid #666;
+        border-radius: 2px;
+        transform: rotate(45deg);
+        position: absolute;
+        right: 3px;
+    }
+    .arrow_line{
+        position: absolute;
+        width: 25px;
+        height: 2px;
+        background-color: #666;
+        right: 7px;
+        top: 3px;
+    }
+  
+    .arrow_down .arrow_kan{
+        transform: rotate(135deg);
+        top: -10px;
+        left: 84px;
+    }
+    .arrow_up .arrow_kan{
+        transform: rotate(48deg);
+        top: 11px;
+        left: -48px;
+    }
+
+
+    .topic_list .topic_tab_item{
+        margin: 0;
+        padding: 0;
+        width: 90px;
+        height: 50px;
+        border-radius: 10px;
+    }
+    
+    
+    .topic_foot{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        margin: 40px;
+    }
+    .topic_foot>div{
+        height: 40px;
+        width: 160px;
+        text-align: center;
+        line-height: 40px;
+        border-radius: 40px;
+        cursor: pointer;
+    }
+    .topic_foot_sub{
+        background-color: #5b9bd5;
+        color: #fff;
+    }
+    .topic_foot_res{
+        background-color: red;
+        color: #fff;
+        
+    }
+    .topic_prompt{
+        position: fixed;
+        background-color: #66666699;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        display: none;
+    }
+    .topic_prompt_cont{
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        background-color: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .topic_prompt_success,.topic_prompt_err{
+        height: 100%;
+        display: none;
+    }
+    .topic_prompt_title{
+        text-align: center;
+        height: 160px;
+        line-height: 160px;
+        font-size: 20px;
+        color: #5b9bd5;
+    }
+    .topic_prompt_but{
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        background-color: #5b9bd5;
+        color: #fff;
+        cursor: pointer;
+    }
+    .topic_prompt_err .topic_prompt_title{
+        color: red;
+    }
+    .topic_prompt_err .topic_prompt_but{
+        background-color: red;
+    }
+    .topic_t{
+        display: inline-block;
+        width: 100px;
+        height: 30px;
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+        vertical-align: middle;
+    }
+    .topic_text{
+        height: 30px;
+        display: inline-block;
+        background-color: #5b9bd5;
+        color: #fff;
+        line-height: 30px;
+        text-align: center;
+        border-radius: 5px;
+        padding: 0 5px;
+    }
+    .topic_suce_text{
+        display: none;
+    }
+</style>
+<body>
+    <div class="calssDom">
+        <div class="massDom">
+            <div class="topic">
+                <div class="topic_kang">
+                    <div class="topic_tip">将用户、角色、权限拖到对应位置上</div>
+                    <div class="topic_tab">
+                        <div draggable="true" class="topic_tab_item" isItem="type1" ondragstart="dragstartFun(event)">用户</div>
+                        <div draggable="true" class="topic_tab_item" isItem="type2" ondragstart="dragstartFun(event)">角色</div>
+                        <div draggable="true" class="topic_tab_item" isItem="type3" ondragstart="dragstartFun(event)">权限</div>
+                    </div>
+                    <div class="topic_content">
+                        <div class="topic_content_item">
+                            <div class="arrow arrow_down">
+                                <div class="arrow_kan">
+                                    <div class="arrow_top"></div>
+                                    <div class="arrow_line"></div>
+                                </div>
+                            </div>
+                            <div class="topic_content_item_item" isItem="type3" isQxItem="item1" ondrop="dropFun(event)" ondragover="dragoverFun(event)" ondragenter="dragenterFun(event)"></div>
+                        </div>
+                        <div class="topic_content_item" style="margin: 0 40px;">
+                            <div class="topic_content_item_item" isItem="type1" ondrop="dropFun(event)" ondragover="dragoverFun(event)" ondragenter="dragenterFun(event)"></div>
+                            <div class="arrow">
+                                <div class="arrow_kan">
+                                    <div class="arrow_top"></div>
+                                    <div class="arrow_line"></div>
+                                </div>
+                            </div>
+                            <div class="topic_content_item_item" isItem="type2" ondrop="dropFun(event)" ondragover="dragoverFun(event)" ondragenter="dragenterFun(event)"></div>
+                            <div class="arrow">
+                                <div class="arrow_kan">
+                                    <div class="arrow_top"></div>
+                                    <div class="arrow_line"></div>
+                                </div>
+                            </div>
+                            <div class="topic_content_item_item topic_list" isItem="type3" isQxItem="item2" ondrop="dropFun(event)" ondragover="dragoverFun(event)" ondragenter="dragenterFun(event)"></div> <!-- 数据库管理管理系统DBMS -->
+                        </div>
+                        <div class="topic_content_item">
+                            <div class="arrow arrow_up">
+                                <div class="arrow_kan">
+                                    <div class="arrow_top"></div>
+                                    <div class="arrow_line"></div>
+                                </div>
+                            </div>
+                            <div class="topic_content_item_item" isItem="type3" isQxItem="item3" ondrop="dropFun(event)" ondragover="dragoverFun(event)" ondragenter="dragenterFun(event)"></div>
+                        </div>
+                    </div>
+                    <!-- <div style="margin-bottom: 10px;user-select: none;line-height: 30px;">
+                        <div>将public模式的USAGE和CREATE权限赋予指定用户public_manager。将3个单词拖到对应位置上 </div> 
+                        <div class="topic_t" isItem="GRANT" ondrop="dropFun(event)" ondragover="dragoverFun(event)" ondragenter="dragenterFun(event)"></div> USAGE,CREATE  
+                        <div class="topic_t" isItem="ON" ondrop="dropFun(event)" ondragover="dragoverFun(event)" ondragenter="dragenterFun(event)"></div>SCHEMA public
+                        <div class="topic_t" isItem="TO" ondrop="dropFun(event)" ondragover="dragoverFun(event)" ondragenter="dragenterFun(event)"></div>public_manager；
+                    </div> -->
+                  
+                    <!-- <div style="margin-bottom: 10px;">
+                        选项：1、<text class="topic_text" draggable="true" isItem="type1" ondragstart="dragstartFun(event)">用户</text>；
+                        2、<text class="topic_text" draggable="true" isItem="type2" ondragstart="dragstartFun(event)">角色</text>；
+                        3、<text class="topic_text" draggable="true" isItem="type3" ondragstart="dragstartFun(event)">权限</text>；
+                    </div> -->
+                    <!-- <div class="topic_suce_text" >正确答案: GRANT USAGE,CREATE ON SCHEMA public TO public_manager;</div> -->
+                </div>
+                <div class="topic_foot">
+                    <div class="topic_foot_res" onclick="handleResetCx()">重置</div>
+                    <div class="topic_foot_sub" onclick="handleSubmitCx()">确认</div>
+                </div>
+
+            </div>
+            <div class="topic_prompt">
+                <div class="topic_prompt_cont">
+                    <div class="topic_prompt_success">
+                        <div class="topic_prompt_title">全部输入成功</div>
+                        <div class="topic_prompt_but" onclick="handleSuccess()">返回</div>
+                    </div>
+                    <div class="topic_prompt_err">
+                        <div class="topic_prompt_title">输入失败</div>
+                        <div class="topic_prompt_but" onclick="handleSelect()">重新选择</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script >
+    
+    /****************手机移动设置**********************/
+    var urlParams = new URLSearchParams(window.location.search);
+    var holdToDrag = urlParams.get('holdToDrag');
+
+    var polyfillApplied = MobileDragDrop.polyfill({
+        dragImageTranslateOverride: MobileDragDrop.scrollBehaviourDragImageTranslateOverride,
+        holdToDrag: holdToDrag
+    });
+
+
+
+       
+
+       
+    /******************拖放交互*******************************/
+        let cxType = ''
+        let indS = 0
+        let cxTypeList=[]
+        let tdDom =''
+        //拖动
+        function dragstartFun(e){
+            tdDom = e.target.innerHTML
+            cxType = e.target.attributes.isItem.value
+            // ind=i
+        }
+        function dragenterFun(e){
+            e.preventDefault(); // allows us to drop
+            e.stopPropagation(); // stop it here to prevent it bubble up
+        }
+        function dragoverFun(e){
+            e.preventDefault()
+        }
+
+        function dropFun(e){
+            e.preventDefault()
+            e.target.style.backgroundColor='#deeaf6'
+            let isSame=e.target.attributes.isItem.value==cxType
+            let isInd = cxTypeList.findIndex(i=>i.mdType==e.target.attributes.isItem.value)
+            if(e.target.attributes.isQxItem&&e.target.attributes.isQxItem.value){
+                let isQx = cxTypeList.findIndex(i=>i.isQxItem==e.target.attributes.isQxItem.value)
+                if(isQx==-1){
+                    cxTypeList.push({
+                        isSame,
+                        cxType,
+                        mdType:e.target.attributes.isItem.value,
+                        isQxItem:e.target.attributes.isQxItem.value
+                    })
+                }else{
+                    cxTypeList[isQx].isSame=isSame
+                    cxTypeList[isQx].cxType=cxType
+                    cxTypeList[isQx].mdType=e.target.attributes.isItem.value
+                    cxTypeList[isQx].isQxItem=e.target.attributes.isQxItem.value
+                }
+            }else{
+                if(isInd==-1){
+                    cxTypeList.push({
+                        isSame,
+                        cxType,
+                        mdType:e.target.attributes.isItem.value,
+                    })
+                }else{
+                    cxTypeList[isInd].isSame=isSame
+                    cxTypeList[isInd].cxType=cxType
+                    cxTypeList[isInd].mdType=e.target.attributes.isItem.value
+                }
+            }
+            e.target.innerHTML=tdDom
+        }
+
+
+        //程序重置
+        function handleResetCx() {
+           let htCx =  document.getElementsByClassName('topic_content_item_item')
+           for (let i = 0; i < htCx.length; i++) {
+                htCx[i].innerHTML=''
+                htCx[i].style.backgroundColor='#deeaf6'
+            }
+            cxTypeList=[]
+        }
+        //提交
+        function handleSubmitCx(){
+            let htCx =  document.getElementsByClassName('topic_content_item_item')
+            let isErr =false
+            console.log(cxTypeList)
+            for (let i = 0; i < cxTypeList.length; i++) {
+                if(!cxTypeList[i].isSame){
+                    for (let o = 0; o < htCx.length; o++) { //htCx[o].attributes.isQxItem.value
+                        if(cxTypeList[i].isQxItem ){
+                            if(htCx[o].attributes.isQxItem&&htCx[o].attributes.isQxItem.value==cxTypeList[i].isQxItem){
+                                htCx[o].style.backgroundColor='#ff000085'
+                                isErr=true
+                            }
+                        }else{
+                            if(htCx[o].attributes.isItem.value==cxTypeList[i].mdType){
+                                htCx[o].style.backgroundColor='#ff000085'
+                                isErr=true
+                            }
+                        }
+                        
+                        
+                    }
+                }
+            }
+            let tip = document.getElementsByClassName('topic_prompt')
+            tip[0].style.display ='flex'
+            let isSuc = cxTypeList.some(i=>!i.isSame)
+            if(cxTypeList.length<htCx.length||isErr){
+                let err = document.getElementsByClassName('topic_prompt_err')
+                err[0].style.display ='block'
+            }else if(!isSuc){
+                 let suc = document.getElementsByClassName('topic_prompt_success')
+                //  let suctxt = document.getElementsByClassName('topic_suce_text')
+                 suc[0].style.display ='block'
+                //  suctxt[0].style.display ='block'
+            }
+        }
+
+        
+
+
+
+        //报错重新选择
+        function handleSelect(){
+            let tip = document.getElementsByClassName('topic_prompt')
+            let err = document.getElementsByClassName('topic_prompt_err')
+            tip[0].style.display ='none'
+            err[0].style.display ='none'
+            // handleResetCx()
+        }
+        //成功返回
+        function handleSuccess(){
+            let tip = document.getElementsByClassName('topic_prompt')
+            let suc = document.getElementsByClassName('topic_prompt_success')
+            tip[0].style.display ='none'
+            suc[0].style.display ='none'
+        }
+    </script>
+</body>
+</html>
