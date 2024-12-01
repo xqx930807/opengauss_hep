@@ -99,7 +99,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: #fff;
+        background-color: #8dccf978;
         text-align: center;
         border-radius: 10px;
         font-size: 13px;
@@ -368,7 +368,7 @@
 
         function dropFun(e){
             e.preventDefault()
-            e.target.style.backgroundColor='#deeaf6'
+            e.target.style.backgroundColor='#8dccf978'
             let isSame=e.target.attributes.isItem.value==cxType
             let isInd = cxTypeList.findIndex(i=>i.mdType==e.target.attributes.isItem.value)
                 if(isInd==-1){
@@ -391,7 +391,7 @@
            let htCx =  document.getElementsByClassName('topic_list')
            for (let i = 0; i < htCx.length; i++) {
                 htCx[i].innerHTML=''
-                htCx[i].style.backgroundColor='#deeaf6'
+                htCx[i].style.backgroundColor='#8dccf978'
             }
             cxTypeList=[]
         }

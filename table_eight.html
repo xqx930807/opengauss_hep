@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表格8</title>
+</head>
+<style>
+     *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+    .calssDom{
+        margin: 0 auto;
+        width: 680px; 
+        padding: 20px;
+        background-color: #d0ebff;
+    }
+    .table_dom{
+        margin: 0 auto;
+        width: 640px;
+        height: 550px;
+        overflow: auto;
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 5px;
+    }
+    /* 定制整个滚动条轨道的颜色 */
+    .table_dom::-webkit-scrollbar-track {
+        background-color: #fff;
+    }
+    
+    /* 定制滚动条的颜色 */
+    .table_dom::-webkit-scrollbar {
+        width: 10px; /* 定制滚动条的宽度 */
+    }
+    
+    /* 定制滚动条滑块的颜色 */
+    .table_dom::-webkit-scrollbar-thumb {
+        background-color: #75b9ff;
+        border-radius: 10px;
+    }
+    
+    /* 当滑块悬停或活动时的颜色 */
+    .table_dom::-webkit-scrollbar-thumb:hover {
+        background-color: #75b9ff;
+    }
+
+
+    .class_table{
+        border-collapse:collapse;
+        margin: 0 auto;
+        width: 100%;
+        max-width: 700px;
+    }
+    .class_table td{
+        height: 40px;
+        padding:  5px;
+        min-width: 52px;
+    }
+    .class_table_tr{
+        background-color: #5b9bd5;
+        color: #fff;
+    }
+    .class_table_tr td{
+        width: 100px;
+        text-align: center;
+    }
+    .class_table_cont_tr{
+        background-color:#deeaf6;
+        font-size: 15px;
+    }
+    .class_table_cont_tr td{
+        font-size: 15px;
+    }
+    .class_table_tr td,.class_table_cont_tr td{
+        border: 1px solid #000;
+    }
+    .tdInput{
+        border: 0;
+        height: 100%;
+        outline: none;
+        width: 100%;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    /* 针对Chrome, Safari等WebKit浏览器 */
+   .table_dom ::-webkit-inner-spin-button,
+   .table_dom ::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    } 
+ 
+    /* 针对Firefox */
+    .table_dom input[type="number"] {
+        -moz-appearance: textfield;
+    }
+    .topic_foot{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        margin: 30px;
+    }
+    .topic_foot>div{
+        height: 40px;
+        width: 160px;
+        text-align: center;
+        line-height: 40px;
+        border-radius: 40px;
+        cursor: pointer;
+    }
+    .topic_foot_sub{
+        background-color: #5b9bd5;
+        color: #fff;
+    }
+    .topic_foot_res{
+        background-color: red;
+        color: #fff;
+        
+    }
+    .topic_prompt{
+        position: fixed;
+        background-color: #66666699;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        display: none;
+    }
+    .topic_prompt_cont{
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        background-color: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .topic_prompt_success,.topic_prompt_err{
+        height: 100%;
+        display: none;
+    }
+    .topic_prompt_title{
+        text-align: center;
+        height: 160px;
+        line-height: 160px;
+        font-size: 20px;
+        color: #5b9bd5;
+    }
+    .topic_prompt_but{
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        background-color: #5b9bd5;
+        color: #fff;
+        cursor: pointer;
+    }
+    .topic_prompt_err .topic_prompt_title{
+        color: red;
+    }
+    .topic_prompt_err .topic_prompt_but{
+        background-color: red;
+    }
+</style>
+<body>
+    <div class="calssDom">
+        <div class="table_dom" id="tableJ">
+            <table class="class_table">
+                <tr class="class_table_tr">
+                    <td style="width: 300px;">主要任务</td>
+                    <td style="width: 300px;">关键操作</td>
+                    <td>配分</td>
+                    <td>得分</td>
+                </tr>
+
+                <tr class="class_table_cont_tr">
+                    <td rowspan="2">优化系统参数（10%）</td>
+                    <td style="text-align: center;">优化操作系统参数</td>
+                    <td style="text-align: center;">5</td>
+                    <td style="text-align: center;">
+                        <input type="number" class="tdInput" max="5" min="0"  oninput="inputAllValue(event)">
+                    </td>
+                </tr>
+                <tr class="class_table_cont_tr">
+                    <!-- <td>优化系统参数（10%）</td> -->
+                    <td style="text-align: center;">优化数据库系统参数</td>
+                    <td style="text-align: center;">5</td>
+                    <td style="text-align: center;">
+                        <input type="number" class="tdInput" max="5" min="0"  oninput="inputAllValue(event)">
+                    </td>
+                </tr>
+
+                <tr class="class_table_cont_tr">
+                    <td rowspan="4">使用EXPLAIN查看SQL执行计划（20%）</td>
+                    <td style="text-align: center;">使用EXPLAIN分析简单查询语句</td>
+                    <td style="text-align: center;">5</td>
+                    <td style="text-align: center;">
+                        <input type="number" class="tdInput" max="5" min="0"  oninput="inputAllValue(event)">
+                    </td>
+                </tr>
+                <tr class="class_table_cont_tr">
+                    <!-- <td>使用EXPLAIN查看SQL执行计划（20%）</td> -->
+                    <td style="text-align: center;">使用EXPLAIN查看详细执行计划</td>
+                    <td style="text-align: center;">5</td>
+                    <td style="text-align: center;">
+                        <input type="number" class="tdInput"  max="5" min="0"  oninput="inputAllValue(event)">
+                    </td>
+                </tr>
+                <tr class="class_table_cont_tr">
+                    <!-- <td>使用EXPLAIN查看SQL执行计划（20%）</td> -->
+                    <td style="text-align: center;">使用EXPLAIN分析复杂查询语句</td>
+                    <td style="text-align: center;">5</td>
+                    <td style="text-align: center;">
+                        <input type="number" class="tdInput"  max="5" min="0"  oninput="inputAllValue(event)">
+                    </td>
+                </tr>
+                <tr class="class_table_cont_tr">
+                    <!-- <td>使用EXPLAIN查看SQL执行计划（20%）</td> -->
+                    <td style="text-align: center;">使用EXPLAIN分析使用索引的查询语句</td>
+                    <td style="text-align: center;">5</td>
+                    <td style="text-align: center;">
+                        <input type="number" class="tdInput"  max="5" min="0"  oninput="inputAllValue(event)">
+                    </td>
+                </tr>
+
+                <tr class="class_table_cont_tr">
+                    <td rowspan="2">审视和修改表定义（10%）</td>
+                    <td style="text-align: center;">审视和修改表数据类型</td>
+                    <td style="text-align: center;">5</td>
+                    <td style="text-align: center;">
+                        <input type="number" class="tdInput" max="5" min="0"  oninput="inputAllValue(event)">
+                    </td>
+                </tr>
+                <tr class="class_table_cont_tr">
+                    <!-- <td>审视和修改表定义（10%）</td> -->
+                    <td style="text-align: center;">创建范围分区表</td>
+                    <td style="text-align: center;">5</td>
+                    <td style="text-align: center;">
+                        <input type="number" class="tdInput" max="5" min="0"  oninput="inputAllValue(event)">
+                    </td>
+                </tr>
+
+                
+                <tr class="class_table_cont_tr">
+                    <td rowspan="3">优化子查询（24%）</td>
+                    <td style="text-align: center;">优化含非相关子查询语句</td>
+                    <td style="text-align: center;">8</td>
+                    <td style="text-align: center;">
+                        <input type="number" class="tdInput" max="8" min="0"  oninput="inputAllValue(event)">
+                    </td>
+                </tr>
+                <tr class="class_table_cont_tr">
+                    <!-- <td>优化子查询（24%）</td> -->
+                    <td style="text-align: center;">优化含相关子查询语句</td>
+                    <td style="text-align: center;">8</td>
+                    <td style="text-align: center;">
+                        <input type="number" class="tdInput" max="8" min="0"  oninput="inputAllValue(event)">
+                    </td>
+                </tr>
+                <tr class="class_table_cont_tr">
+                    <!-- <td>优化子查询（24%）</td> -->
+                    <td style="text-align: center;">优化含子链接查询语句</td>
+                    <td style="text-align: center;">8</td>
+                    <td style="text-align: center;">
+                        <input type="number" class="tdInput" max="8" min="0"  oninput="inputAllValue(event)">
+                    </td>
+                </tr>
+
+                <tr class="class_table_cont_tr">
+                    <td rowspan="4">改写SQL查询语句（36%）</td>
+                    <td style="text-align: center;">改写SQL消除IN/ANY-clause语句</td>
+                    <td style="text-align: center;">9</td>
+                    <td style="text-align: center;">
+                        <input type="number" class="tdInput" max="9" min="0"  oninput="inputAllValue(event)">
+                    </td>
+                </tr>
+                <tr class="class_table_cont_tr">
+                    <!-- <td>改写SQL查询语句（36%）</td> -->
+                    <td style="text-align: center;">改写SQL消除子查询</td>
+                    <td style="text-align: center;">9</td>
+                    <td style="text-align: center;">
+                        <input type="number" class="tdInput" max="9" min="0"  oninput="inputAllValue(event)">
+                    </td>
+                </tr>
+                <tr class="class_table_cont_tr">
+                    <!-- <td>改写SQL查询语句（36%）</td> -->
+                    <td style="text-align: center;">改写SQL增加JOIN列非空判断</td>
+                    <td style="text-align: center;">9</td>
+                    <td style="text-align: center;">
+                        <input type="number" class="tdInput" max="9" min="0"  oninput="inputAllValue(event)">
+                    </td>
+                </tr>
+                <tr class="class_table_cont_tr">
+                    <!-- <td>改写SQL查询语句（36%）</td> -->
+                    <td style="text-align: center;">改写复杂SQL语句</td>
+                    <td style="text-align: center;">9</td>
+                    <td style="text-align: center;">
+                        <input type="number" class="tdInput" max="9" min="0"  oninput="inputAllValue(event)">
+                    </td>
+                </tr>
+
+                <tr class="class_table_cont_tr">
+                    <td colspan="2" style="text-align: center;">合计</td>
+                    <!-- <td style="text-align: center;"></td> -->
+                    <td style="text-align: center;">100</td>
+                    <td style="text-align: center;">
+                        <div id="allValue"></div>
+                    </td>
+                </tr>
+            </table>
+            <div class="topic_foot">
+                <div class="topic_foot_sub" onclick="handleSubmitCx()">提交</div>
+            </div>
+            <div class="topic_prompt">
+                <div class="topic_prompt_cont">
+                    <div class="topic_prompt_success">
+                        <div class="topic_prompt_title" id="alltopvalue">合计得分：0分</div>
+                        <div class="topic_prompt_but" onclick="handleSuccess()">返回</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function inputAllValue(e){
+        if(e.target.value){
+            if(Number(e.target.value)>e.target.max){
+                e.target.value=e.target.max
+            }else if(Number(e.target.value)<e.target.min){
+                e.target.value=e.target.min
+            }
+        }
+        var ind = document.getElementsByClassName('tdInput')
+
+        var allValue=0
+        for (var i =0;i<ind.length;i++) {
+            allValue+= Number(ind[i].value||0)
+        }
+        document.getElementById('allValue').innerHTML = allValue;
+        document.getElementById('alltopvalue').innerHTML ='合计得分：'+ allValue+'分';
+    }
+    //提交
+    function handleSubmitCx(){
+        let tip = document.getElementsByClassName('topic_prompt')
+        tip[0].style.display ='flex'
+        let err = document.getElementsByClassName('topic_prompt_success')
+        err[0].style.display ='block'
+        
+    }
+    //成功返回
+    function handleSuccess(){
+        let tip = document.getElementsByClassName('topic_prompt')
+        let suc = document.getElementsByClassName('topic_prompt_success')
+        tip[0].style.display ='none'
+        suc[0].style.display ='none'
+    }
+</script>
+</html>

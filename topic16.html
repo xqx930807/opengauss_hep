@@ -141,7 +141,7 @@
         display: inline-block;
         width: 80px;
         height: 30px;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid #333;
         text-align: center;
         vertical-align: middle;
     }
@@ -167,18 +167,19 @@
                 <div class="topic_kang">
                     <div style="margin-bottom: 10px;user-select: none;line-height: 30px;">
                         <div>查看SQL语句的执行计划并以JSON格式输出。 </div> 
-                        SET explain_perf_mode=
+                        <div> SET explain_perf_mode=
                         <div class="topic_t" isItem="type1" ondrop="dropFun(event)" ondragover="dragoverFun(event)" ondragenter="dragenterFun(event)"></div>;
+                        </div>
                         <div class="topic_t" isItem="type2" ondrop="dropFun(event)" ondragover="dragoverFun(event)" ondragenter="dragenterFun(event)"></div>
                         (<div class="topic_t" isItem="type3" ondrop="dropFun(event)" ondragover="dragoverFun(event)" ondragenter="dragenterFun(event)"></div>,
-                        <div class="topic_t" isItem="type4" ondrop="dropFun(event)" ondragover="dragoverFun(event)" ondragenter="dragenterFun(event)"></div>jso) select * from companyinfos;
+                        <div class="topic_t" isItem="type4" ondrop="dropFun(event)" ondragover="dragoverFun(event)" ondragenter="dragenterFun(event)"></div>json) select * from companyinfos;
                     </div>
                     <div class="topic_tip">将选项的4个单词拖到对应划线位置上</div>
                     <div style="margin-bottom: 10px;">
-                        选项：1、<text class="topic_text" draggable="true" isItem="type3" ondragstart="dragstartFun(event)">analyze</text>；
-                        2、<text class="topic_text" draggable="true" isItem="type1" ondragstart="dragstartFun(event)">normal</text>；
-                        3、<text class="topic_text" draggable="true" isItem="type4" ondragstart="dragstartFun(event)">format</text>；
-                        4、<text class="topic_text" draggable="true" isItem="type2" ondragstart="dragstartFun(event)">explain</text>；
+                        选项：1. <text class="topic_text" draggable="true" isItem="type3" ondragstart="dragstartFun(event)">analyze</text>；
+                        2. <text class="topic_text" draggable="true" isItem="type1" ondragstart="dragstartFun(event)">normal</text>；
+                        3. <text class="topic_text" draggable="true" isItem="type4" ondragstart="dragstartFun(event)">format</text>；
+                        4. <text class="topic_text" draggable="true" isItem="type2" ondragstart="dragstartFun(event)">explain</text>；
                     </div>
                     <div class="topic_suce_text" >正确答案：SET explain_perf_mode=normal;explain (analyze, format json) select * from companyinfos;</div>
                 </div>
@@ -239,7 +240,7 @@
 
         function dropFun(e){
             e.preventDefault()
-            e.target.style.backgroundColor='#fff'
+            e.target.style.backgroundColor=''
             let isSame=e.target.attributes.isItem.value==cxType
             let isInd = cxTypeList.findIndex(i=>i.mdType==e.target.attributes.isItem.value)
             if(isInd==-1){
@@ -262,7 +263,7 @@
            let htCx =  document.getElementsByClassName('topic_t')
            for (let i = 0; i < htCx.length; i++) {
                 htCx[i].innerHTML=''
-                htCx[i].style.backgroundColor='#fff'
+                htCx[i].style.backgroundColor=''
             }
             cxTypeList=[]
             let suctxt = document.getElementsByClassName('topic_suce_text')

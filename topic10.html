@@ -142,7 +142,7 @@
         display: inline-block;
         width: 100px;
         height: 30px;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid #333;
         text-align: center;
         vertical-align: middle;
     }
@@ -173,9 +173,9 @@
                     </div>
                     <div class="topic_tip">将3个单词拖到对应位置上</div>
                     <div style="margin-bottom: 10px;">
-                        选项：1、<text class="topic_text" draggable="true" isItem="GRANT" ondragstart="dragstartFun(event)">GRANT</text>；
-                        2、<text class="topic_text" draggable="true" isItem="TO" ondragstart="dragstartFun(event)">TO</text>；
-                        3、<text class="topic_text" draggable="true" isItem="ON" ondragstart="dragstartFun(event)">ON</text>；
+                        选项：1. <text class="topic_text" draggable="true" isItem="GRANT" ondragstart="dragstartFun(event)">GRANT</text>；
+                        2. <text class="topic_text" draggable="true" isItem="TO" ondragstart="dragstartFun(event)">TO</text>；
+                        3. <text class="topic_text" draggable="true" isItem="ON" ondragstart="dragstartFun(event)">ON</text>；
                     </div>
                     <div class="topic_suce_text" >正确答案: GRANT USAGE,CREATE ON SCHEMA public TO public_manager;</div>
                 </div>
@@ -236,7 +236,7 @@
 
         function dropFun(e){
             e.preventDefault()
-            e.target.style.backgroundColor='#fff'
+            e.target.style.backgroundColor=''
             let isSame=e.target.attributes.isItem.value==cxType
             let isInd = cxTypeList.findIndex(i=>i.mdType==e.target.attributes.isItem.value)
             if(isInd==-1){
@@ -259,7 +259,7 @@
            let htCx =  document.getElementsByClassName('topic_t')
            for (let i = 0; i < htCx.length; i++) {
                 htCx[i].innerHTML=''
-                htCx[i].style.backgroundColor='#fff'
+                htCx[i].style.backgroundColor=''
             }
             cxTypeList=[]
             let suctxt = document.getElementsByClassName('topic_suce_text')

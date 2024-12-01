@@ -141,7 +141,7 @@
         display: inline-block;
         width: 50px;
         height: 30px;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid #333;
         text-align: center;
         vertical-align: middle;
     }
@@ -175,10 +175,10 @@
                     </div>
                     <div class="topic_tip">将选项的4个单词拖到对应划线位置上</div>
                     <div style="margin-bottom: 10px;">
-                        选项：1、<text class="topic_text" draggable="true" isItem="d" ondragstart="dragstartFun(event)">-d</text>；
-                        2、<text class="topic_text" draggable="true" isItem="p" ondragstart="dragstartFun(event)">-p</text>；
-                        3、<text class="topic_text" draggable="true" isItem="t" ondragstart="dragstartFun(event)">-t</text>；
-                        4、<text class="topic_text" draggable="true" isItem="n" ondragstart="dragstartFun(event)">-n</text>；
+                        选项：1. <text class="topic_text" draggable="true" isItem="d" ondragstart="dragstartFun(event)">-d</text>；
+                        2. <text class="topic_text" draggable="true" isItem="p" ondragstart="dragstartFun(event)">-p</text>；
+                        3. <text class="topic_text" draggable="true" isItem="t" ondragstart="dragstartFun(event)">-t</text>；
+                        4. <text class="topic_text" draggable="true" isItem="n" ondragstart="dragstartFun(event)">-n</text>；
                     </div>
                     <div class="topic_suce_text" >正确答案: gs_restore dcpdb_backup.dmp -p 15400 -d dcpdb_pc -n public -t companyinfos;</div>
                 </div>
@@ -239,7 +239,7 @@
 
         function dropFun(e){
             e.preventDefault()
-            e.target.style.backgroundColor='#fff'
+            e.target.style.backgroundColor=''
             let isSame=e.target.attributes.isItem.value==cxType
             let isInd = cxTypeList.findIndex(i=>i.mdType==e.target.attributes.isItem.value)
             if(isInd==-1){
@@ -262,7 +262,7 @@
            let htCx =  document.getElementsByClassName('topic_t')
            for (let i = 0; i < htCx.length; i++) {
                 htCx[i].innerHTML=''
-                htCx[i].style.backgroundColor='#fff'
+                htCx[i].style.backgroundColor=''
             }
             cxTypeList=[]
             let suctxt = document.getElementsByClassName('topic_suce_text')
